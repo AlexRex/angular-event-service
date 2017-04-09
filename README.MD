@@ -1,4 +1,4 @@
-# angular-event-service
+# :satellite: Angular Events Service
 
 An angular service to broadcast and listen global events. It works like Anagular@1 event service. 
 
