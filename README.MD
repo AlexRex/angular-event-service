@@ -1,5 +1,7 @@
 # angular-event-service
 
+An angular service to broadcast and listen global events. It works like Anagular@1 event service. 
+
 ## Installation
 
 To install this library, run:
@@ -8,7 +10,7 @@ To install this library, run:
 $ npm install angular-event-service --save
 ```
 
-## Consuming your library
+## Using it
 
 Once you have published your library to npm, you can import your library in any Angular application by running:
 
@@ -22,20 +24,19 @@ and then from your Angular `AppModule`:
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
-
-// Import your library
-import { SampleModule } from 'angular-event-service';
+// Import the module
+import { EventsServiceModule } from 'angular-event-service';
 
 @NgModule({
   declarations: [
     AppComponent
+    // ...
   ],
   imports: [
     BrowserModule,
-
-    // Specify your library as an import
-    LibraryModule
+    // ...
+    // Import forRoot()
+    EventsServiceModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -43,14 +44,37 @@ import { SampleModule } from 'angular-event-service';
 export class AppModule { }
 ```
 
-Once your library is imported, you can use its components, directives and pipes in your Angular application:
+Once your library is imported, you can use it in your app like this: 
 
-```xml
-<!-- You can now use your library component in app.component.html -->
-<h1>
-  {{title}}
-</h1>
-<sampleComponent></sampleComponent>
+```typescript
+import { Component } from '@angular/core';
+
+import { EventsService } from 'angular-event-service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'app works!';
+
+  constructor(private _eventsService: EventsService) {
+  }
+
+  ngOnInit() {
+    this._eventsService.on('test', (payload: any) => {
+      console.log(payload);
+    });
+  }
+
+  ngAfterViewInit() {
+    this._eventsService.broadcast('test', 'testPayload');
+    setTimeout(() => {
+      this._eventsService.broadcast('test', 'testPayload2');
+    }, 1500);
+  }
+}
 ```
 
 ## Development
