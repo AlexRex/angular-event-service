@@ -1,6 +1,6 @@
-[![npm version](https://badge.fury.io/js/angular-event-service.svg)](https://badge.fury.io/js/angular-event-service)
-
 # :satellite: Angular Events Service
+
+[![npm version](https://badge.fury.io/js/angular-event-service.svg)](https://badge.fury.io/js/angular-event-service)
 
 An angular service to broadcast and listen global events. It works like Anagular@1 event service. 
 
