@@ -41,12 +41,23 @@ export class EventsService {
   /**
    * Emits an event to all the listeners.
    * @param {string} name Name of the event to broadcast
-   * @param {Array<any>} args Payload of arguments to send. 
+   * @param {Array<any>} args Payload of arguments to send.
    */
   broadcast(name: string, ...args: Array<any>): void {
     this.eventsSubject.next({
       name,
       args
     });
+  }
+
+  /**
+   * Destroys the listener from the listener list.
+   * @param  {string} name Event name
+   * @param  {any} listener Callback function to delete
+   */
+  destroyListener(name: string, listener: any): void {
+    if (this.listeners[name] && this.listeners[name].indexOf(listener) > -1) {
+      this.listeners[name].splice(this.listeners[name].indexOf(listener), 1);
+    }
   }
 }

@@ -1,7 +1,6 @@
-# :satellite: Angular Events Service
+# :satellite: Angular Event Service
 
-An angular service to broadcast and listen global events. It works like Anagular@1 event service. 
-
+An angular service to broadcast and listen global events. It works like Anagular@1 event service.
 
 [![npm version](https://badge.fury.io/js/angular-event-service.svg)](https://badge.fury.io/js/angular-event-service)
 
@@ -47,7 +46,7 @@ import { EventsServiceModule } from 'angular-event-service';
 export class AppModule { }
 ```
 
-Once your library is imported, you can use it in your app like this: 
+Once your library is imported, you can use it in your app like this:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -60,15 +59,15 @@ import { EventsService } from 'angular-event-service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  private callbackListener: Function = (payload: any) => {
+    console.log(payload);
+  };
 
   constructor(private _eventsService: EventsService) {
   }
 
   ngOnInit() {
-    this._eventsService.on('test', (payload: any) => {
-      console.log(payload);
-    });
+    this._eventsService.on('test', this.callbackListener);
   }
 
   ngAfterViewInit() {
@@ -77,8 +76,15 @@ export class AppComponent {
       this._eventsService.broadcast('test', 'testPayload2');
     }, 1500);
   }
+
+  ngOnDestroy() {
+    this._eventsService.destroyListener('test', this.callbackListener);
+  }
 }
 ```
+
+Make sure to destroy the listener once you destroy the component. If not, you will be registering references to events and calling different
+references to the same callback each time the event occurs.
 
 ## Development
 

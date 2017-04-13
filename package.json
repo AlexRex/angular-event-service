@@ -1,6 +1,6 @@
 {
   "name": "angular-event-service",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "scripts": {
     "build": "ngc -p tsconfig.json",
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
